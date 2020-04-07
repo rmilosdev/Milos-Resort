@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('Login')"></head>
+<body>
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div  th:replace="layout :: flash1"></div>
+            <div class="login d-flex justify-content-center">
+                <div id="adminDiv">
+                    <h3>Milos Resort - <span>Manager</span></h3>
+                    <form th:action="@{/manager}" method="post" th:object="${manager}">
+                        <div class="form-group">
+                            <i class="fas fa-user"></i>
+                            <input id="username" type="text" th:field="*{username}">
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-key"></i>
+                            <input id="password" type="password" th:field="*{password}">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Uloguj se">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

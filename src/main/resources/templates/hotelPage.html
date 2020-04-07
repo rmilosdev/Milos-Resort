@@ -1,0 +1,121 @@
+<!DOCTYPE  html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: head('Hotel Info')"></head>
+<body>
+    <div th:replace="layout :: user-nav"></div>
+    <section id="hotelPage-section1">
+        <div class="container-fluid">
+            <div style="padding-top: 60px;" class="row">
+                <div th:replace="layout :: flash"></div>
+                <div class="col-md-7">
+                    <img class="img-fluid" th:src="@{|/hotels/${hotel.id}.jpeg|}">
+                </div>
+                <div class="col-md-5">
+                    <h1 id="hotelInfo-h1" class="display-4" th:text="${hotel.name}"></h1>
+                    <p style="font-size: 1.2em;" th:text="${hotel.description}"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="hotelPage-section2">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h1>Book a room</h1>
+                    <div sec:authorize="hasRole('USER')">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Room number</th>
+                                <th scope="col">Room type</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="room : ${freeRooms}">
+                                <th th:text="${room.id}" scope="row">1</th>
+                                <td th:text="${room.roomType.name}">Otto</td>
+                                <td>
+                                    <p style="color:red;" th:if="${room.free == true}">Busy</p>
+                                    <p style="color: green;" th:if="${room.free == false}">Free</p>
+                                </td>
+                                <td>
+                                    <a id="reserve-button" class="reserve-open-form-button" type="button" data-toggle="modal" th:attr="data-target='#reservationModal'+${room.id}">Book</a>
+                                </td>
+
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="${'reservationModal' + room.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <form id="reserve-room-form" th:action="@{|more/${room.id}/reserve|}" method="post" th:object="${reservation}">
+                                        <div style="max-width: 700px" class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div id="reserveModalHeader" class="modal-header">
+                                                    <h5 th:text="${'Soba broj'}" class="modal-title" id="exampleModalLabel"></h5><span id="h5Span" th:text="${room.id}"></span>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div style="background-color: #896bb3" class="modal-body">
+                                                    <div class="container">
+                                                        <div class="row text-center">
+                                                            <div class="col-md-7">
+                                                                <img th:if="${room.roomType.numBed == 'four'}" id="reserveModalImage" class="img-fluid" src="/images/hotels/4bed.jpg">
+                                                                <img th:if="${room.roomType.numBed == 'three'}" id="reserveModalImage" class="img-fluid" src="/images/hotels/3bed.jpg">
+                                                                <img th:if="${room.roomType.numBed == 'two'}" id="reserveModalImage" class="img-fluid" src="/images/hotels/2bed.jpg">
+                                                                <img th:if="${room.roomType.numBed == 'one'}" id="reserveModalImage" class="img-fluid" src="/images/hotels/1bed.jpg">
+                                                            </div>
+                                                            <div th:id="${'reservation-form-div' + room.id}" style="background-color: white;border-radius: 5px;position: relative;right: 10px;" class="col-md-5">
+                                                                <p>Arriving date: <input style="border-radius: 5px;
+                                                                                                            border: none;
+                                                                                                            background-color: #f2f2f2;
+                                                                                                            padding: 10px 20px;" type="date" th:id="${'inputDate' + room.id}" name="date" required th:field="*{date}"></p>
+                                                                <p>Number of nights: <input style="border-radius: 5px;
+                                                                                                border: none;
+                                                                                                background-color: #f2f2f2;
+                                                                                                padding: 10px 20px;" type="text" th:id="${'numberOfDays' + room.id}" required pattern="^[0-9]*$" th:field="*{numbOfDays}"></p>
+                                                                <input type="hidden" th:id="${'singlePrice' + room.id}" th:value="${room.roomType.price}">
+                                                                <input type="hidden" th:value="${room.id}" name="room_id">
+                                                                <p>Total costs: <input style="background-color: white;
+                                                                                                border: 1px solid grey;
+                                                                                                border-radius: 5px;
+                                                                                                width: 150px;"
+                                                                                        type="text" value="0"  th:id="${'price' + room.id}" readonly th:field="*{price}"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="background-color: #896bb3;" class="modal-footer">
+                                                    <input type="submit" style="color:#896bb3; background-color: white; padding: 10px 15px" id="reserve-submit" class="reserve-button" value="Book">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <p>Please Log in so you can book a room.</p>
+                        <a type="button" th:href="@{/login}" class="btn btn-warning">Log in</a>
+                    </div>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <p>Only clients can book rooms, admin!</p>
+                    </div>
+                    <div sec:authorize="hasRole('MANAGER')">
+                        <p>Only clients can book rooms!</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <div th:replace="layout :: footer"></div>
+    <div th:replace="layout :: scripts"></div>
+    <script>
+    </script>
+</body>
+
+</html>

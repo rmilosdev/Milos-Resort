@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('Users')"></head>
+<body>
+<div th:replace="layout :: admin-nav"></div>
+
+<div class="container-fluid">
+    <div style="margin-top: 100px;" class="row text-center">
+        <div th:replace="layout :: flash"></div>
+        <div class="col-md-12">
+            <ul id="hotel-operations">
+                <li>
+                    <a th:href="@{/admin/users/list}">Pregled svih registrovanih korisnika</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

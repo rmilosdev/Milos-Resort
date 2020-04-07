@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <h3>Sobe hotela</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Broj sobe</th>
+            <th scope="col">Status</th>
+            <th scope="col">Tip sobe</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <h2 th:if="${rooms == null}">Hotel nema sobe.</h2>
+        <tr th:each="room : ${rooms}">
+            <th th:text="${room.id}" scope="row">1</th>
+            <td>
+                <p style="color: red;" th:if="${room.free == true}">Zauzeta</p>
+                <p style="color: green;" th:if="${room.free == false}">Slobodna</p>
+            </td>
+            <td>
+                <p th:text="${room.roomType.name}"></p>
+            </td>
+            <td>
+                <a th:href="@{|manager/room/${room.id}/delete|}" style="color: white;" class="btn btn-danger" type="button">Brisi</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

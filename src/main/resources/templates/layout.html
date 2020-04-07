@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head(page_title)" lang="sr">
+        <meta charset="UTF-8"/>
+        <meta description="viewport" content="width=device-width, initial-scale=1"/>
+
+        <link rel="stylesheet" th:href="@{/style/style.css}"/>
+        <link rel="stylesheet" th:href="@{/style/datepicker.css}"/>
+
+        <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}" />
+
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css}" />
+        <!--<link rel="stylesheet" th:href="@{/vendor/jquery/jquery-ui.css}" />-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+
+        <title th:text="'milosresort | ' + ${page_title}">milosresort</title>
+    </head>
+
+
+    <head th:fragment="admin-head(page_title)" lang="sr">
+        <meta charset="UTF-8"/>
+        <meta description="viewport" content="width=device-width, initial-scale=1"/>
+
+        <link rel="stylesheet" th:href="@{/style/admin-style.css}"/>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css}" />
+
+        <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+
+        <title th:text="'Admin | ' + ${page_title}">milosresort</title>
+    </head>
+
+    <head th:fragment="manager-head(page_title)" lang="sr">
+        <meta charset="UTF-8"/>
+        <meta description="viewport" content="width=device-width, initial-scale=1"/>
+
+        <link rel="stylesheet" th:href="@{/style/admin-style.css}"/>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css}" />
+
+        <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+
+        <title th:text="'Menadzer | ' + ${page_title}">milosresort</title>
+    </head>
+
+    <body>
+
+        <div th:fragment="user-nav">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                        <a class="navbar-brand" href="#"><span id="spanFirst">Milos</span><span>Resort</span></a>
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item" th:classappend="${#httpServletRequest.servletPath.equals('/home') ? 'active' : ''}">
+                                <a th:href="@{/home}">Home</a>
+                            </li>
+                        </ul>
+
+                        <div style="display: inline-flex" sec:authorize="hasRole('USER')">
+                            <li>
+                                <p id="auth-user">Welcome, </p>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="nav-username" sec:authentication="name"><span class="caret"></span></a>
+                                <ul id="user-info" class="dropdown-menu">
+                                    <li>
+                                        <div class="row text-center">
+                                            <div class="col-md-12">
+                                                <a id="user-dropdown-items" th:href="@{/account}">My account</a>
+                                                <a id="user-dropdown-items" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i><span>Odjava</span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            </li>
+                        </div>
+
+                        <div sec:authorize="isAnonymous()">
+                            <ul class="nav navbar-nav">
+                                <li><p class="navbar-text">Already have an account?</p></li>
+                                <li class="nav-item">
+                                    <a style="position: relative;top: 15px;" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Log in</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div th:fragment="admin-nav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a class="navbar-brand" href="#">Milos Resort - Admin</a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" th:classappend="${#httpServletRequest.servletPath.equals('/admin/hotels') ? 'active' : ''}">
+                            <a class="nav-link" th:href="@{/admin/hotels}">Operations with hotels</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${#httpServletRequest.servletPath.equals('/admin/users') ? 'active' : ''}">
+                            <a class="nav-link" th:href="@{/admin/users}">Operations with users</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${#httpServletRequest.servletPath.equals('/admin/rooms') ? 'active' : ''}">
+                            <a class="nav-link" th:href="@{/admin/rooms}">Operations wtih rooms</a>
+                        </li>
+                    </ul>
+                    <div style="display: inline-flex" sec:authorize="hasRole('ADMIN')">
+                        <li class="nav-item" style="list-style: none;">
+                            <a id="admin-logout" class="nav-link" th:href="@{/logout}"><span>Log out</span></a>
+                        </li>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div th:fragment="manager-nav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a class="navbar-brand" href="#">Milos Resort - Manager</a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" th:classappend="${#httpServletRequest.servletPath.equals('/manager/index') ? 'active' : ''}">
+                            <a class="nav-link" th:href="@{/admin/hotels}"></a>
+                        </li>
+                    </ul>
+                    <div style="display: inline-flex" sec:authorize="hasRole('MANAGER')">
+                        <li class="nav-item" style="list-style: none;">
+                            <a id="admin-logout" class="nav-link" th:href="@{/logout}"><span>Log out</span></a>
+                        </li>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div th:fragment="flash" th:if="${flash != null}" class="container">
+            <div class="message">
+                <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+            </div>
+        </div>
+
+
+        <div th:fragment="flash1" th:if="${flash1 != null}" class="container">
+            <div class="message">
+                <div th:classappend="${#strings.toLowerCase(flash1.status)}" th:text="${flash1.message}" class="flash"></div>
+            </div>
+        </div>
+
+        <div th:fragment="flash2" th:if="${flash2 != null}" class="container">
+            <div class="message">
+                <div th:classappend="${#strings.toLowerCase(flash1.status)}" th:text="${flash1.message}" class="flash2"></div>
+            </div>
+        </div>
+
+        <div th:fragment="footer">
+            <footer>
+                <div style="background-color: #896bb3; color: white;" class="footer">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <h2>About us</h2>
+                                <p>
+                                    Natura Resort is a boutique hotel mixing design,
+                                    comfort and nature which make the place unique in Siem Reap and the concept
+                                    original in the Kingdom. Located on the riverside road going to the temples and
+                                    5 minutes only from town,
+                                    the hotel is easy to find and to access.
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h2>Contact</h2>
+                                <p>+38165322433</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h2>Follow us</h2>
+                                <p style="font-size: 1.5em;"><i class="fab fa-instagram"></i></p>
+                                <p style="font-size: 1.5em;"><i class="fab fa-twitter"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <div th:fragment="scripts">
+            <script th:src="@{/vendor/jquery/jquery-3.3.1.js}"></script>
+            <script th:src="@{/vendor/jquery/jquery-ui.js}"></script>
+            <script th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
+            <script th:src="@{/js/bootstrap-datepicker.js}"></script>
+            <script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@8}"></script>
+            <script th:src="@{https://cdn.jsdelivr.net/npm/promise-polyfill}"></script>
+            <script th:src="@{/js/app.js}"></script>
+            <script th:src="@{/js/room-reservation.js}"></script>
+            <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js}"></script>
+        </div>
+    </body>
+</html>

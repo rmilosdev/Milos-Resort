@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('Users')">
+</head>
+<body>
+<div th:replace="layout :: admin-nav"></div>
+<div class="container-fluid">
+    <div class="row list text-center">
+        <div class="col-md-12">
+            <div th:replace="layout :: flash"></div>
+            <div id="dialog" style="display: none;" title="Potrebna je potvrda.">
+                Korisnik ce biti izbrisan iz baze, kao i sve njegove dosadasnje rezervacije!
+                Obrisane podatke nije moguce povratiti!
+            </div>
+            <h1 style="margin-bottom: 60px;" class="display-4">Korisnici</h1>
+            <div th:if="${!users.isEmpty()}">
+                <form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Prezime</th>
+                            <th scope="col">Ime</th>
+                            <th scope="col">Korisnicko ime</th>
+                            <th scope="col">Uloga</th>
+                            <th scope="col">Operacije</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <th id="userId" scope="row" th:text="${user.id}"></th>
+                            <td th:text="${user.lastName}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:if="${user.role.name == 'ROLE_USER'}" th:text="${'Klijent'}"></td>
+                            <td th:if="${user.role.name == 'ROLE_ADMIN'}" th:text="${'Administrator'}"></td>
+                            <td th:if="${user.role.id == 2}" th:text="${'Menadzer'}"></td>
+                            <td th:if="${user.role.name == 'ROLE_USER'}">
+                                <a style="display: inline;" class="btn btn-danger obrisi" th:href="@{|/admin/user/${user.id}/delete/|}">Obrisi</a>
+                                <a style="display: inline;" class="btn btn-warning" th:href="@{|/admin/user/${user.id}/update/|}">Azuriraj</a>
+                                <a style="display: inline;" class="btn btn-primary" th:href="@{|/admin/user/${user.id}/reservations/|}">Rezervacije</a>
+                            </td>
+                            <td th:if="${user.role.id == 2}">
+                                <a style="display: inline;" class="btn btn-danger obrisi" th:href="@{|/admin/user/${user.id}/delete/|}">Obrisi</a>
+                                <a style="display: inline;" class="btn btn-warning" th:href="@{|/admin/user/${user.id}/update/|}">Azuriraj</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div th:if="${users.isEmpty()}">
+                <p>Trenutno nemate registrovane korisnike</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

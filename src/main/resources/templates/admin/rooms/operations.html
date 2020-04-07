@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('rooms')">
+    <script src="../../../static/js/app.js"></script>
+</head>
+<body>
+<div th:replace="layout :: admin-nav"></div>
+<div class="container-fluid">
+    <div style="margin-top: 100px;" id="operations-row" class="row text-center">
+        <div th:replace="layout :: flash"></div>
+        <div id="dialog" class="dialogRoom" style="display: none;" title="Potrebna je potvrda.">
+            Soba ce biti izbrisana iz baze,
+            proverite da li soba ima aktivnih rezervacija!<b>Napomena: </b>
+            Izbrisane podatke nije moguce povratiti!
+        </div>
+        <div id="dialog" class="dialogRoomType" style="display: none;" title="Potrebna je potvrda.">
+           Tip sobe ce biti izbrisan iz baze, kao i sve sobe koje spadaju pod tim tipom!<b>Napomena: </b>
+            Izbrisane podatke nije moguce povratiti!
+        </div>
+        <div class="col-md-6">
+            <a id="operation-link-1" class="operation-links" style="text-decoration-line: none;" href="#">Operacije sa tipovima soba</a>
+            <div style="display: none;" class="hidden-div-1">
+                <img id="triangle" src="/images/triangle.svg">
+                <div class="hidden-operation-div">
+                    <ul>
+                        <li>
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#dodajTipModal">Dodaj novi tip</a>
+                        </li>
+                        <li style="position: relative;left: 22px;">
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#azurirajTipModal">Azuriraj postojeci tip</a>
+                        </li>
+                        <li style="position: relative;right: 18px;">
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#brisiTipModal">Obrisi tip</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modal azuriraj tip sobe-->
+            <div class="modal fade" id="azurirajTipModal" tabindex="-1" role="dialog" aria-labelledby="azurirajTipModal" aria-hidden="true" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Izaberi tip za azuriranje: </h5>
+                            <div style="margin-top: 10px;">
+                                <form id="firstForm" th:action="@{/admin/roomtype/update/types}" method="post" enctype="multipart/form-data">
+                                    <select id="choosenType">
+                                        <option id="firstType" value="" selected></option>
+                                        <option th:each="type : ${listTypes}" th:value="${type.id}" th:text="${type.name}">Cetvorokrevetna</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div id="ispisForme"></div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="secondForm" th:action="@{/admin/roomtype/update}" method="post" th:object="${roomtype}">
+                            <input id="updateTypeId" type="hidden" th:field="*{id}">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="updateTypeName">Naziv tipa: </label>
+                                    <input type="text" id="updateTypeName" th:field="*{name}" disabled/>
+                                </div>
+                                <div id="form-group-beds" class="form-group">
+                                    <label for="updateNumberBeds">Broj kreveta: </label>
+                                    <select id="updateNumberBeds" th:field="*{numBed}" disabled>
+                                        <option id="firstNull" value="" selected></option>
+                                        <option value="one">Jedan</option>
+                                        <option value="two">Dva</option>
+                                        <option value="three">Tri</option>
+                                        <option value="four">Cetri</option>
+                                    </select>
+                                </div>
+                                <div id="form-group-price" class="form-group">
+                                    <label for="updateTypePrice">Cena: </label>
+                                    <input id="updateTypePrice" type="text" th:field="*{price}" disabled><span> din.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                                <button type="submit" class="btn btn-primary">Azuriraj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal dodaj tip sobe-->
+            <div class="modal fade" id="dodajTipModal" tabindex="-1" role="dialog" aria-labelledby="dodajTipModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Dodaj novi tip sobe</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form th:action="@{/admin/roomtype/add}" method="post" th:object="${roomtype}" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="typeName">Naziv tipa: </label>
+                                    <input type="text" id="typeName" th:field="*{name}"/>
+                                </div>
+                                <div id="form-group-beds" class="form-group">
+                                    <label for="numberBeds">Broj kreveta: </label>
+                                    <select id="numberBeds" th:field="*{numBed}">
+                                        <option value="" selected></option>
+                                        <option value="one">Jedan</option>
+                                        <option value="two">Dva</option>
+                                        <option value="three">Tri</option>
+                                        <option value="four">Cetri</option>
+                                    </select>
+                                </div>
+                                <div id="form-group-price" class="form-group">
+                                    <label for="typePrice">Cena: </label>
+                                    <input id="typePrice" type="text" th:field="*{price}"><span> din.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                                <button type="submit" class="btn btn-primary">Dodaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal brisi tip sobe-->
+            <div class="modal fade" id="brisiTipModal" tabindex="-1" role="dialog" aria-labelledby="brisiTipModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Odaberi tip za brisanje: </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="formRoomTypeDelete" th:action="@{/admin/roomtype/delete}" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <select id="choosenType" name="typeForDelete">
+                                        <option id="firstType" value="" selected></option>
+                                        <option id="options" th:each="type : ${listTypes}" th:value="${type.id}" th:text="${type.name}">Cetvorokrevetna</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                                <button type="submit" class="btn btn-primary obrisiTipSobe">Brisi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <a id="operation-link-2" class="operation-links" style="text-decoration-line: none;" href="#">Operacije sa sobama</a>
+            <div style="display: none;" class="hidden-div-2">
+                <!-- Modal dodaj novu sobu-->
+                <div class="modal fade" id="dodajSobuModal" tabindex="-1" role="dialog" aria-labelledby="dodajSobuModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Dodaj novu sobu: </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form th:action="@{/admin/room/add}" method="post" th:object="${room}">
+                                <div class="modal-body">
+                                    <input type="hidden" value="vrednost" th:field="*{free}">
+                                    <div class="form-group">
+                                        <label for="selectHotel">Hotel: </label>
+                                        <select name="selectHotel" id="selectHotel" th:field="*{hotel}">
+                                            <option value="" selected></option>
+                                            <option th:each="hotel : ${listHotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div id="form-group" class="form-group">
+                                        <label for="selectType">Tip sobe: </label>
+                                        <select id="selectType" th:field="*{roomType}">
+                                            <option value="" selected></option>
+                                            <option th:each="type : ${listTypes}" th:value="${type.id}" th:text="${type.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <img id="triangle" src="/images/triangle.svg">
+                <div class="hidden-operation-div">
+                    <ul>
+                        <li>
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#dodajSobuModal">Dodaj novu sobu</a>
+                        </li>
+                        <li>
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#azurirajSobuModal">Azuriraj postojecu sobu</a>
+                        </li>
+                        <li>
+                            <span><img class="arrow" src="/images/arrow1.svg"></span><a th:href="@{'#'}" data-toggle="modal" data-target="#brisiSobuModal">Brisi postojecu sobu</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal azuriraj sobu-->
+        <div class="modal fade" id="azurirajSobuModal" tabindex="-1" role="dialog" aria-labelledby="azurirajSobuModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Azuriraj postojecu sobu </h5>
+                    </div>
+                        <div class="modal-body">
+                            <form id="formFindRoom" method="POST" th:action="@{/admin/room/update}">
+                                <div id="form-group-roomId" class="form-group">
+                                    <label for="roomId">Unesi ID sobe za azuriranje: </label>
+                                    <input type="text" id="roomId" name="roomId" size="5">
+                                    <button id="findRoom" type="button" class="btn btn-success">Trazi</button>
+                                    <p style="color: green; font-size: 12px; visibility: hidden;" id="find-success">*Soba je pronadjena u hotelu<span id="findRoomSpan"><br><strong>Podaci pronadjene sobe: </strong></span></p>
+                                    <table style="visibility: hidden;" id="findRoomTable" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id sobe</th>
+                                            <th scope="col">Tip sobe</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td id="colRoomId"></td>
+                                            <td id="colRoomType"></td>
+                                            <td id="colRoomStatus"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="color: red; font-size: 12px; visibility: hidden;" id="find-failed">*Soba sa zadatim ID-jem nije pronadjena.</p>
+                                </div>
+                                <hr>
+                                <div id="form-group-roomUpdate" class="form-group">
+                                    <h5>Izmeni podatke: </h5>
+                                    <select id="updateroomType" name="updateroomType" disabled>
+                                        <option th:each="type : ${listTypes}" th:value="${type.id}" th:text="${type.name}"></option>
+                                    </select>
+                                    <select id="updateroomFree" name="updateroomFree" disabled>
+                                        <option value="false">Slobodna</option>
+                                        <option value="true">Zauzeta</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                                    <button id="updateRoomSubmit" type="submit" class="btn btn-primary">Azuriraj</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!--Dodati JQuery Ui alert da ce se obrisati i reservacija zajedno sa sobom-->
+        <!-- Modal brisi postojecu sobu-->
+        <div class="modal fade" id="brisiSobuModal" tabindex="-1" role="dialog" aria-labelledby="brisiSobuModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Odaberi tip za brisanje: </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="formDeleteRoom" th:action="@{/admin/room/delete}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="roomId">Unesite ID sobe za brisanje: </label>
+                                <input type="number" name="roomId" id="roomId">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+                            <button type="submit" class="btn btn-primary obrisiSobu">Brisi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <h2>Tipovi soba</h2>
+
+            <table class="table" id="roomsTable">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Naziv tipa</th>
+                    <th scope="col">Broj kreveta</th>
+                    <th scope="col">Cena</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="type : ${listTypes}">
+                    <th scope="row" th:text="${type.id}">id</th>
+                    <td th:text="${type.name}">Naziv</td>
+                    <td>
+                        <p th:if="${type.numBed == 'five'}" th:text="${'Pet'}"></p>
+                        <p th:if="${type.numBed == 'four'}" th:text="${'Cetri'}"></p>
+                        <p th:if="${type.numBed == 'three'}" th:text="${'Tri'}"></p>
+                        <p th:if="${type.numBed == 'two'}" th:text="${'Dva'}"></p>
+                        <p th:if="${type.numBed == 'one'}" th:text="${'Jedan'}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${type.price} + ' din.'"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 150px;" class="col-md-12">
+            <h2>Odaberi hotel za prikaz soba</h2>
+            <div class="hotels">
+                <form id="form-show-rooms" th:action="@{/admin/room/showrooms}" method="post">
+                    <select id="choosenHotel">
+                        <option id="firstHotel" value="" selected></option>
+                        <option th:each="hotel : ${listHotels}" th:value="${hotel.name}" th:text="${hotel.name}">Cetvorokrevetna</option>
+                    </select>
+                </form>
+                <div style="margin-bottom: 200px; margin-top: 40px;" class="hotel-table">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id sobe</th>
+                            <th scope="col">Naziv hotela</th>
+                            <th scope="col">Tip sobe</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

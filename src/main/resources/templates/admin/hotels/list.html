@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('list')"></head>
+<body>
+    <div th:replace="layout :: admin-nav"></div>
+        <div class="container-fluid">
+            <div class="row list text-center">
+                <div class="col-md-12">
+                    <div th:replace="layout :: flash"></div>
+                    <div id="dialog" style="display: none;" title="Potrebna je potvrda.">
+                       Hotel ce biti izbrisan iz baze, kao i sve sobe zajedno sa rezervacijama!
+                        <b>Napomena: </b>
+                        Izbrisane podatke nije moguce povratiti!
+                    </div>
+                    <h1 style="margin-bottom: 60px;" class="display-4">Hoteli</h1>
+                    <div th:if="${!hotels.isEmpty()}">
+                        <form th:action="@{/admin/hotel/${hotel.id}/update/}">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Naziv</th>
+                                    <th scope="col">Lokacija</th>
+                                    <th scope="col">Broj zvezdica</th>
+                                    <th scope="col">Menadzer</th>
+                                    <th scope="col">Opis</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="hotel : ${hotels}">
+                                    <th scope="row" th:text="${hotel.id}">id</th>
+                                    <td th:text="${hotel.name}">Naziv</td>
+                                    <td th:text="${hotel.location}">Lokacija</td>
+                                    <td>
+                                        <p style="float: left;" th:if="${hotel.numStar == 'pet'}">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                        <p style="float: left;" th:if="${hotel.numStar == 'cetri'}">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                        <p style="float: left;" th:if="${hotel.numStar == 'tri'}">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                        <p style="float: left;" th:if="${hotel.numStar == 'dve'}">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                        <p style="float: left;" th:if="${hotel.numStar == 'jedna'}">
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </td>
+                                    <td th:if="${hotel.manager != null}" th:text="${hotel.manager.name + ' ' + hotel.manager.lastName}">Opis</td>
+                                    <td th:if="${hotel.manager == null}" th:text="${'Nema menadzera'}">Opis</td>
+                                    <td th:text="${hotel.description}">Opis</td>
+                                    <td>
+                                        <a style="display: inline;" class="btn btn-danger obrisiHotel" th:href="@{|/admin/hotel/${hotel.id}/delete/|}">Obrisi</a>
+                                        <a style="display: inline;" class="btn btn-warning" th:href="@{|/admin/hotel/${hotel.id}/update/|}">Azuriraj</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div th:if="${hotels.isEmpty()}">
+                        <p>Trenutno nemate hotele</p>
+                        <a class="btn btn-primary" th:href="@{/admin/hotels/form}">Dodaj hotel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div th:replace="layout :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('login')">
+</head>
+<body>
+<div th:replace="layout :: user-nav"></div>
+<div style="position: relative; top: 150px;" class="container-fluid text-center">
+    <div class="row">
+        <div class="col-md-12">
+            <div th:replace="layout :: flash"></div>
+        </div>
+    </div>
+</div>
+<div class="vertical-center" style="padding: 30px 20px 0px 20px;">
+    <div class="container-fluid">
+        <form th:action="@{/register}" method="post" th:object="${user}">
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'error' : ''">
+                <input class="input-field" th:field="*{name}" type="text" id="name" placeholder="First Name">
+                <div class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'error' : ''">
+                <input class="input-field" th:field="*{lastName}" type="text" id="lastName" placeholder="Last Name">
+                <div class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'error' : ''">
+                <input class="input-field" th:field="*{username}" type="text" id="username" placeholder="Username">
+                <div class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'error' : ''">
+                <input class="input-field" th:field="*{password}" type="password" id="password" placeholder="Password">
+                <div class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <input style="float: none;" class="input-submit" type="submit" id="submit" value="Register">
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

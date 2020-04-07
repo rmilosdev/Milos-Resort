@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('Rezervacije')"></head>
+<body>
+<div th:replace="layout :: admin-nav"></div>
+
+<div th:if="${user.role.name == 'ROLE_USER'}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 id="client-reservation-h2">Aktivne rezervacije klijenta<span th:text="${' ' + user.name + ' ' + user.lastName}"> </span></h2>
+            </div>
+            <div class="col-md-12">
+                <div th:each="reservation, iter : ${user.reservations}" class="container-fluid">
+                    <div th:if="${reservation.arrived == false}"  class="client-reservation">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-2">
+                                    <span style="color: white; font-weight: bold" th:text="${iter.index+1}"></span>
+                                </div>
+                                <div style="margin-left: 30px" class="col-6">
+                                    <p class="client-reservation-p">ID rezervacije: <span class="client-reservation-span" th:text="${' ' + reservation.id}"></span></p>
+                                    <p class="client-reservation-p">Datum i vreme rezervacije: <span class="client-reservation-span" th:text="${' ' + reservation.reservationDate}"></span></p>
+                                    <p class="client-reservation-p">Datum dolaska: <span class="client-reservation-span" th:text="${' ' + reservation.date}"></span></p>
+                                    <p class="client-reservation-p">Broj sobe: <span class="client-reservation-span" th:text="${' ' + reservation.room.id}"></span></p>
+                                    <p class="client-reservation-p">Hotel: <span class="client-reservation-span" th:text="${' ' + reservation.room.hotel.name}"></span></p>
+                                </div>
+                                <div style="float: right;margin-bottom: 10px;" class="col-3">
+                                    <a th:href="@{'/admin/user/' + ${user.id} + '/reservation/' + ${reservation.id} + '/check'}" type="submit" class="btn btn-warning">Stigao u hotel</a>
+                                    <a th:href="@{'/admin/user/' + ${user.id} + '/reservation/' + ${reservation.id} + '/delete'}" class="btn btn-danger">Otkazi rezervaciju</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div th:if="${user.reservations.isEmpty()}" class="row text-center">
+                <div class="col-12">
+                    <h3>Klijent trenutno nema rezervacije.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="height:3px;border:none;color:#333;background-color:#333;width: 100%;">
+
+<div class="row text-center">
+    <!--Cekirane rezervacije-->
+    <div class="col-md-12">
+        <h1>Obradjene rezervacije</h1>
+        <div class="finished-reservation" th:each="res : ${user.reservations}" th:if="${res.arrived == true}">
+            <!--Dodati jos jedno polje za rezervaciju, datum dolaska u hotel, i to prikazati ovde-->
+            <!--Ispisati sve podatke o obradjenoj rezeravciji, dodati odgorvarajuci stil-->
+            <!--Onemoguciti izmenu rezervacije klijentu na profilu, nakon potvrde rezervacije-->
+
+                <p th:text="${'ID rezervacije:' + res.id}"></p>
+                <p th:text="${'Datum dolaska: ' + res.date}"></p>
+                <p th:text="${'Datum odlaska: ' + res.leaving}"></p>
+                <p th:text="${'Broj sobe: ' + res.room.id}"></p>
+                <p th:text="${'Naziv hotela: ' + res.room.hotel.name}"></p>
+
+        </div>
+        <p th:if="${#httpServletRequest.getParameter(hasCheckedReservations) == false || hasCheckedReservations == false}" th:text="${'Klijent trenutno nema obradjenih rezervacija.'}"></p>
+    </div>
+</div>
+
+<div th:if="${user.role.name != 'ROLE_USER'}">
+    <h2>Samo klijenti imaju pravo na rezervacije.</h2>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Profile info')"></head>
+<body>
+<div th:replace="layout :: user-nav"></div>
+<!--<div id="dialog1" style="display: none;" title="Potrebna je potvrda.">-->
+    <!--Da li ste sigurni da zelite da otkazete rezervaciju?-->
+<!--</div>-->
+<div style="position: relative; top: 150px;" class="container-fluid text-center">
+    <div class="row">
+        <div class="col-md-12">
+            <div th:replace="layout :: flash"></div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row justify-content-end">
+        <aside class="col-md-4 sidebar">
+            <ul class="side-bar">
+                <li  th:classappend="${#httpServletRequest.servletPath.equals('/account') ? 'current' : ''}">
+                    <a th:href="@{/account}">Moj Profil</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/account/reservations') ? 'current' : ''}">
+                    <a th:href="@{/account/reservations}">Rezervacije</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+    <div class="row justify-content-center">
+        <div style="padding: 0;" class="box-info col-md-6">
+            <div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <h2 id="reservation-h1">Rezervacije</h2>
+                    </div>
+                    <div class="row">
+                        <div id="reservation-p-div">
+                            <p id="reservation-p">Pregled svih vasih aktivnih rezervacija</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:20px;" class="box-info col-md-6">
+            <div th:if="${reservations.isEmpty()}" class="row text-center">
+                <p style="font-size: 18px; font-weight: bold; color: #3d3d3d;">Trenutno nemate aktivnih rezervacija.</p>
+            </div>
+            <div th:each="reservation, iter: ${reservations}" class="row">
+                <div class="box-cell col-2">
+                    <p th:text="${iter.index+1}">Rezervacija</p>
+                </div>
+                <div id="first-cell" class="cell-info col-7">
+                    <p>Datum i vreme rezervacije: <span th:text="${reservation.reservationDate.toString()}"></span></p>
+                    <p class="reservation-details-p">Datum dolaska: <span th:text="${#dates.format(reservation.getDate(), 'dd-MM-yyyy')}"></span></p>
+                    <p th:if="${reservation.getLeaving() != null}" class="reservation-details-p">Datum odlaska: <span th:text="${#dates.format(reservation.getLeaving(), 'dd-MM-yyyy')}"></span></p>
+                    <p class="reservation-details-p">Broj nocenja: <span th:text="${reservation.numbOfDays}"></span></p>
+                    <p class="reservation-details-p">Broj sobe: <span th:text="${reservation.room.id}"></span></p>
+                    <p class="reservation-details-p">Tip sobe: <span th:text="${reservation.room.roomType.name}"></span></p>
+                    <p class="reservation-details-p">Hotel: <span th:text="${reservation.room.hotel.name}"></span></p>
+                </div>
+                <!--Srediti datum rezervacije i dodati dugme za otkazivanje rezervacije koje vazi sve dok korisnik ne dodje u hotel-->
+                <div class="col-3">
+                    <a th:href="@{|/account/reservations/${reservation.id}/|}" th:if="${reservation.arrived == false}" class="btn btn-danger">Otkazi rezervaciju</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

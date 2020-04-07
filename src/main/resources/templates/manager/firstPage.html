@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: manager-head('Milos Resort')">
+</head>
+<body bgcolor="#edeff0">
+    <div th:replace="layout :: manager-nav"></div>
+    <div class="container-fluid">
+        <div th:replace="layout :: flash"></div>
+        <div style="padding-top: 50px;" class="row">
+            <div class="col-md-7">
+                <img class="img-fluid" th:src="@{|/hotels/${manager.hotel.id}.jpeg|}">
+            </div>
+            <div class="col-md-5">
+                <h1 style="background-color: #343a40; color: white; margin-left: -30px;" id="hotelInfo-h1" class="display-4" th:text="${manager.hotel.name}"></h1>
+                <p style="font-size: 1.2em;" th:text="${manager.hotel.description}"></p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <ul style="list-style: none; list-style-type: none; margin-top: 15px;
+                padding: 0;">
+                    <li>
+                        <h5 class="manager-list-h5">Operacije sa sobama</h5>
+                        <ul class="manager-list-body">
+                            <li class="manager-list-items"><i class="fas fa-chevron-right"></i><a class="manager-link" th:href="@{|manager/${manager.hotel.id}/room/add|}">Kreiranje nove sobe</a></li>
+                            <li class="manager-list-items"><i class="fas fa-chevron-right"></i><a class="manager-link" th:href="@{|manager/${manager.hotel.id}/room/delete|}">Brisanje sobe</a></li>
+                            <li class="manager-list-items"><i class="fas fa-chevron-right"></i><a class="manager-link" th:href="@{|manager/${manager.hotel.id}/room/update|}">Izmeni sobu</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h5 class="manager-list-h5">Operacije sa hotelom</h5>
+                        <ul class="manager-list-body">
+                            <li class="manager-list-items"><i class="fas fa-chevron-right"></i><a class="manager-link" th:href="@{|manager/${manager.hotel.id}/hotel/update|}">Izmena podataka</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div style="background-color: white;" class="col-md-8 manager-content">
+                <!--Ajax Content-->
+            </div>
+        </div>
+    </div>
+    <div th:replace="layout :: scripts"></div>
+</body>

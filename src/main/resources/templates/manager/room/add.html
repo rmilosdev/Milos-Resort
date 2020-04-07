@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Dodaj novu sobu</h3>
+<form th:action="@{/manager/manager/room/add}" method="post" th:object="${room}">
+    <input type="hidden" value="vrednost" th:field="*{free}">
+    <!--<input type="hidden" th:value="${passedHotelId}" th:field="*{hotel}"/>-->
+    <div id="form-group" class="form-group">
+        <label for="selectType">Tip sobe: </label>
+        <select id="selectType" th:field="*{roomType}">
+            <option value="" selected></option>
+            <option th:each="roomType : ${roomTypes}" th:value="${roomType.id}" th:text="${roomType.name}"></option>
+        </select>
+    </div>
+    <div id="form-group" class="form-group">
+        <input name="hotelId" th:if="${returnedHotel != null}" type="hidden" th:value="${returnedHotel.id}">
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+</body>
+</html>

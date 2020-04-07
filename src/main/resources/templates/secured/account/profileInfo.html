@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Profile info')"></head>
+<body>
+<div th:replace="layout :: user-nav"></div>
+    <div style="position: relative; top: 150px;" class="container-fluid text-center">
+        <div class="row">
+            <div class="col-md-12">
+                <div th:replace="layout :: flash"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <aside class="col-md-4 sidebar">
+                <ul class="side-bar">
+                    <li id="sidebarElement" th:classappend="${#httpServletRequest.servletPath.equals('/account') ? 'current' : ''}">
+                        <a th:href="@{/account}">Moj Profil</a>
+                    </li>
+                    <li th:classappend="${#httpServletRequest.servletPath.equals('/reservations') ? 'current' : ''}">
+                        <a th:href="@{/account/reservations}">Rezervacije</a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+        <div class="row justify-content-center">
+            <div class="box-info col-md-6">
+                <div class="row">
+                    <div class="box-cell col-6">
+                        Ime
+                    </div>
+                    <div id="first-cell" class="cell-info col-6" th:text="${user.getName()}">
+                        ime
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-cell col-6">
+                        Prezime
+                    </div>
+                    <div class="cell-info col-6"th:text="${user.getLastName()}">
+                        prezime
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-cell col-6">
+                        Sifra
+                    </div>
+                    <div class="cell-info col-6">
+                        * * * * * *
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-cell col-6">
+                        Korisnicko ime
+                    </div>
+                    <div class="cell-info col-6" th:text="${user.getUsername()}">
+                        korisnicko ime
+                    </div>
+                    <a id="infoChange" th:href="@{|/account/${user.id}/edit/form|}" class="btn btn-primary">Izmeni podatke</a>
+                    <a id="passChange" th:href="@{|/account/${user.id}/updatePassword/form|}">Promeni sifru</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

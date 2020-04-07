@@ -1,0 +1,265 @@
+
+html,body{
+    background-color: #edeff0;
+}
+
+body{
+    height: 0;
+}
+
+li.active{
+    color: white;
+}
+
+#hotel-operations li{
+    list-style: none;
+}
+
+#hotel-operations li a{
+    text-decoration: none;
+    font-size: 22px;
+    color: #343a40;
+}
+
+#hotel-operations li a:hover{
+    color: #9a9da0;
+}
+
+.vertical-center{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 10px;
+    padding: 30px 20px;
+}
+
+.submit{
+    cursor: pointer;
+}
+
+.flash{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+.flash.success{
+    background-color: #7f9e40;
+    color: #f3f6ee;
+}
+
+.flash2.success{
+    color: #7f9e40;
+}
+
+.flash2.failure{
+    color: #ac4343;
+}
+
+.flash.failure{
+    background-color: #ac4343;
+    color: #f2e2e2;
+}
+
+.error-admin .input-field {
+    border-width: 2px;
+    border-color: #ac4343;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.error-admin .error-message {
+    color: #ac4343;
+}
+
+.list{
+    position: relative;
+    top: 100px;
+}
+
+.fa-star{
+    color: gold;
+}
+
+/*Administrator rooms page*/
+
+.operation-links{
+    font-size: 22px;
+    color: #343a40;
+    text-decoration-line: none;
+}
+.operation-links:hover{
+    color: #9a9da0;
+}
+
+.hidden-operation-div{
+    background-color: white;
+    width: 70%;
+    height: 150px;
+    margin: 0 auto;
+    position: relative;
+    top: 25px;
+}
+
+.hidden-operation-div ul{
+    list-style: none;
+    padding-top: 25px;
+    float: left;
+}
+
+
+.hidden-operation-div ul li{
+    margin-bottom: 10px;
+}
+
+
+.hidden-operation-div ul li a {
+    text-decoration-line: none;
+    color: #343a40;
+}
+
+.hidden-operation-div ul li a:hover {
+    color: #9a9da0;
+}
+
+.arrow{
+    width: 6px;
+    position: relative;
+    top: -1px;
+    margin-right: 5px;
+}
+
+#triangle{
+    width: 3%;
+    position: relative;
+    top: 30px;
+    right: 0px;
+}
+
+
+/*Administrator rooms modal form*/
+.modal-title{
+    margin: 0 auto;
+    font-size: 27px;
+}
+#typePrice{
+    width: 100px;
+}
+
+#form-group-beds{
+    position: relative;
+    right:60px;
+}
+
+#form-group-price{
+    position: relative;
+    right: 50px;
+}
+/*Administrator login page*/
+
+.login{
+    position: relative;
+    top: 200px;
+}
+
+#adminDiv{
+    background-color: white;
+    padding: 40px;
+}
+
+#adminDiv > h3{
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+#adminDiv > h3 > span{
+    font-weight: bold;
+}
+
+#admin-logout{
+    font-size: 22px;
+    font-weight: bold;
+    color: #9a9da0;
+}
+
+#admin-logout:hover{
+    color: white;
+}
+
+/*Admin client reservation page*/
+
+#client-reservation-h2{
+    margin-top: 150px;
+    margin-bottom: 100px;
+    font-weight: lighter;
+    text-align: center !important;
+}
+
+#client-reservation-h2 span{
+    font-weight: bolder;
+}
+
+.client-reservation{
+    background-color: #b8b8b8;
+    font-size: 20px;
+    width: 70%;
+    padding: 5px;
+    margin: 20px auto;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.client-reservation-span{
+    font-weight: bolder;
+}
+
+.finished-reservation{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #65b730;
+    border-radius: 10px;
+    font-weight: bolder;
+    color: white;
+    padding: 20px;
+}
+
+/*Manager Page Styles*/
+
+.manager-list-h5{
+    background-color: white;
+    padding: 5px 10px;
+    color: #343a40;
+    font-weight: bold;
+}
+
+.manager-list-items{
+    background-color: #343a40;
+    color: white;
+    text-align: left;
+    margin: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.manager-list-items a, .manager-list-items a:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.manager-list-body{
+    padding: 0;
+}
+
+.fa-chevron-right{
+    margin-right: 4px;
+}

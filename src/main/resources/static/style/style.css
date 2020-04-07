@@ -1,0 +1,650 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 0;
+}
+
+html, body{
+    font-family: 'Varela Round', sans-serif;
+    background-color: #edeff0;
+}
+
+a{
+    text-decoration-line: none;
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+a:hover{
+    color: #fefefe;
+}
+
+.nav{
+    position: relative;
+}
+
+.navbar-right{
+    margin-right: 200px;
+}
+
+.carousel-inner{
+    height: 500px;
+}
+
+.navbar-expand-lg, .navbar-brand{
+    background-color: #896BB3;
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+.navbar-brand #spanFirst{
+    color: #D5BCFF;
+}
+
+.navbar-brand span{
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.nav .nav-item{
+    margin-right: 25px;
+}
+
+.nav .nav-item a{
+    font-size: 18px;
+    font-weight: bold;
+    color: #d6c5ec;
+    text-decoration-line: none;
+    transition: .3s;
+}
+
+.nav .nav-item a:hover{
+    color: #fefefe;
+}
+
+.nav li.active a{
+    color: #fefefe;
+}
+
+
+#nav-username{
+    color: #fefefe;
+    font-size: 22px;
+    margin-left: 10px;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+#user-dropdown-items{
+    font-size: 18px;
+    font-weight: bold;
+    color: #896bb3;
+    text-decoration-line: none;
+    display: block;
+}
+
+#auth-user{
+    display: inline;
+    margin-left: 25px;
+    font-size: 18px;
+    color: #d6c5ec;
+    padding-left: 10px;
+    border-left: 3px solid #fefefe;
+}
+
+.navbar-text{
+    margin-right: 25px;
+    position: relative;
+    top: 8px;
+    color: #9f76e2;
+}
+
+.dropdown{
+    position: relative;
+    top:-5px;
+}
+
+#user-info{
+    min-width: 250px;
+    margin-right: 100px;
+    position: absolute;
+    top: 60px;
+    left: -100px;
+    padding: 14px;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+
+#user-dropdown-items{
+    transition: .3s;
+}
+
+#user-dropdown-items:hover{
+   color: #7341ba;
+}
+
+#user-dropdown-items span{
+    margin-left: 8px;
+}
+
+.dropdown a{
+    text-decoration-line: none;
+}
+
+.dropdown-toggle{
+    color: #d6c5ec;
+    transition: .3s;
+}
+
+.dropdown-toggle:hover{
+    color: #fefefe;
+}
+
+/*NAVIGATION LOGIN*/
+#login-dp{
+    min-width: 250px;
+    margin-right: 100px;
+    position: absolute;
+    left: -200px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+
+
+#login-dp .help-block{
+    font-size:12px
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+
+
+
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+
+/*FLASH MESSAGE*/
+
+.flash {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+.flash.success {
+    background-color: #7f9e40;
+    color: #f3f6ee;
+}
+
+.flash.failure {
+    background-color: #ac4343;
+    color: #f2e2e2;
+}
+
+/* Form validation messages */
+.error .input-field {
+    border-width: 2px;
+    border-color: #ac4343;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.error .error-message {
+    border: 2px solid #ac4343;
+    border-radius: 0 0 6px 6px;
+    background-color: #ac4343;
+    color: rgb(254,251,251);
+    padding: 10px;
+}
+
+.kill{
+    cursor: pointer;
+    position:relative;
+    cursor: pointer;
+    bottom: 92px;
+    left: 540px;
+    color: #fefefe;
+
+}
+
+
+
+/*LOGIN PAGE*/
+
+.vertical-center{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #fefefe;
+    top: 200px;
+    border-radius: 10px;
+    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+}
+
+.input-field{
+    background-color: #e8ebed;
+    border: 2px solid #e8ebed;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+.input-field:focus{
+    background-color: white;
+    color: #6b6c6d;
+}
+::placeholder:focus{
+    color: #4f595b;
+}
+::placeholder{
+    font-weight: bold;
+    color: #4f595b;
+}
+
+.input-submit{
+    border: 0;
+    background-color: #896bb3;
+    padding: 10px 15px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .3s;
+    border-radius: 10px;
+    cursor: pointer;
+    float: left;
+}
+
+.input-submit:hover{
+    background-color: #7341ba;
+}
+
+.forgot-pass{
+    display: inline-block;
+    float: right;
+    margin-top: 10px;
+}
+
+.forgot-pass a{
+    color: #848484;
+    transition: .3s;
+    font-size: 16px;
+    text-decoration-line: none;
+}
+
+.forgot-pass a:hover{
+    color: #4f595b;
+}
+
+.join-us{
+    position: relative;
+    top: 100px;
+    margin: 0;
+    padding: 0;
+    right: -100px;
+    width: 200px;
+}
+
+.join-us p{
+    display: inline-block;
+}
+
+.join-us p a{
+    text-decoration-line: none;
+    cursor: pointer;
+    color: #4f595b;
+}
+
+.join-us p a:hover{
+    color: #272e30;
+}
+
+/*ACCOUNT SETTINGS*/
+
+.sidebar .side-bar{
+    overflow: hidden;
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: 0 20px;
+    top: 300px;
+    padding: 0;
+}
+
+.side-bar li{
+    background-color: #f9fafa;
+    color: #7b8b8e;
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.side-bar li:hover{
+    background-color: #fff;
+    color: #4b5658;
+}
+
+.side-bar li:last-child{
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+}
+
+.side-bar li.current:last-child{
+    border-top: 2px solid #d4d9dd
+}
+
+.side-bar li a{
+    display: block;
+    font-weight: bold;
+    color: inherit;
+    font-size: 18px;
+    padding: 15px 20px;
+    transition: padding 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.side-bar li.current{
+    background: #fff;
+    color: #4b5658;
+    border-bottom: 2px solid #d4d9dd;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05)
+}
+
+
+.box-info{
+    position: relative;
+    animation: boxInfoAnimation 0.7s ease;
+    background: #fff;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    top: 100px;
+    right: 80px;
+    margin-right: 100px;
+    padding: 15px;
+}
+
+.box-cell{
+    font-size: 18px;
+    font-weight: bold;
+    color: #7b8b8e;
+    border-bottom: 2px solid #d4d9dd;
+}
+
+.cell-info{
+    font-size: 16px;
+    border-bottom: 2px solid #d4d9dd;
+}
+
+
+.box-info:first-child{
+    padding: 0 15px 15px 15px ;
+}
+
+.box-cell, .cell-info{
+    padding: 15px;
+}
+
+#infoChange{
+    margin:15px 15px auto;
+    background-color: #896bb3;
+    border-color: #896bb3;
+    color: #fefefe;
+    font-weight: bold;
+}
+
+#infoChange:active{
+    border-color: #675187;
+    box-shadow: none
+}
+
+#infoChange:active, #infoChange:focus {
+    color: #ffffff;
+    background-color: #675187;
+    border-color: #675187;
+}
+
+#infoChange:hover{
+    background-color: #675187;
+}
+
+#passChange{
+    text-decoration-line: none;
+    color: #505b5e;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 2px solid #a9b3bb;
+    border-radius: 4px;
+    margin-top: 10px;
+    position: relative;
+    top: 5px;
+}
+
+/*Account Reservations style*/
+
+#reservation-h1{
+    background-color: white;
+    padding: 20px;
+    color: #575E64;
+}
+
+#reservation-p{
+    background-color: #F9FAFA;
+    padding: 20px;
+    color: #576366;
+    font-size: 18px;
+    margin-bottom: 1px;
+}
+
+.reservation-details-p{
+    color: #576366;
+    font-size: 16px;
+}
+
+.reservation-details-p span{
+    color: #576366;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+#reservation-p-div{
+    width: 100%;
+    margin: 0;
+}
+
+#section-two{
+    background-color: white;
+}
+
+#section-two-h1{
+    font-weight: lighter;
+}
+
+/*Card style*/
+
+#card-button:hover{
+    color: white;
+}
+
+.card-button{
+    background-color: #896bb3;
+    width: 100%;
+    border: 0;
+    color: white;
+    padding: 10px 50px;
+    font-weight: bolder;
+}
+
+.card-title{
+    font-weight: bolder;
+
+}
+
+.card-img-top{
+    max-height: 161px;
+}
+
+.card{
+    margin-bottom: 10px;
+}
+
+#hotelPage-section1{
+    background-color: #896bb3;
+    padding: 40px;
+    color: white;
+}
+
+#hotelPage-section2{
+    background-color: white;
+}
+
+
+#reserve-button{
+    background-color: #896bb3;
+    color: white;
+    font-weight: bold;
+    border:0;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.reserve-button{
+    background-color: #896bb3;
+    color: white;
+    font-weight: bold;
+    border:0;
+    padding: 5px 15px;
+    cursor: pointer;
+    text-decoration-line: none;
+}
+
+
+#reserve-button{
+    text-decoration-line: none;
+}
+
+#hotelInfo-h1{
+    background-color: white;
+    color: #896bb3;
+    position: relative;
+    padding: 5px 10px 5px 0px;
+    left: -30px;
+}
+
+#reserveModalHeader{
+    background-color: #896bb3;
+}
+
+#reserveModalHeader h5{
+    margin: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    top: 25px;
+    margin-left: 250px;
+    color: white;
+}
+
+#reserveModalHeader #h5Span{
+    font-size: 3em;
+    padding: 0;
+    margin: 0;
+    font-weight: bolder;
+    color: #bca1e2;
+}
+
+#reserveModalImage{
+    border-radius: 5px;
+    box-shadow: 1px 2px 3px;
+}
+
+#numberOfDays{
+    border-radius: 5px;
+    border: none;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+}
+
+#price{
+    border-radius: 5px;
+    border: none;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+    width: 150px;
+}
+
+
+
+
+
+
+/*box-info animation*/
+
+@keyframes boxInfoAnimation {
+    0%{
+        opacity: 1;
+    }
+    25%{
+        opacity: 0;
+        -ms-transform:translatey(30px);
+        -moz-transform: translatey(30px);
+        -webkit-transform: translatey(30px);
+        transform: translatey(30px);
+    }
+    100%{
+        opacity: 1;
+
+    }
+}

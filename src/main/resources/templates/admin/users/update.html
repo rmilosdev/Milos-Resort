@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: admin-head('Update')"></head>
+<body>
+<div th:replace="layout :: admin-nav"></div>
+    <div class="container-fluid">
+        <div class="row list text-center">
+            <div class="col-md-12">
+                <h1 style="margin-bottom: 60px;" class="display-4">Izmena podataka</h1>
+                <form th:action="@{${action}}" method="post" th:object="${user}">
+                    <input type="hidden" th:field="*{lastName}">
+                    <input type="hidden" th:field="*{name}">
+                    <input type="hidden" th:field="*{password}">
+                    <input type="hidden" th:field="*{username}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Prezime</th>
+                            <th scope="col">Ime</th>
+                            <th scope="col">Korisnicko ime</th>
+                            <th scope="col">Uloga</th>
+                            <th scope="col">Operacije</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" th:text="${id}"></th>
+                            <td th:text="${user.lastName}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td>
+                                <select th:field="*{role}">
+                                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}">Klijent</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input style="display: inline;" class="btn btn-success" type="submit" value="Snimi">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>
